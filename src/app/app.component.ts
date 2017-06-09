@@ -9,6 +9,8 @@ import { ServerService } from './server.service'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  // appName = this.serverService.getAppName();    // <--- use this with the pipe async to avoid doing the subscribe logic
+  somePerson = this.serverService.getServers();
   people = [];
   servers = [
     {
@@ -41,16 +43,16 @@ export class AppComponent {
       );
   }
 
-  onGet() {
-    this.serverService.getServers()
-      .subscribe(
-        (people: any[]) => {
-          this.people = people;
-          console.log(this.people)
-        },
-        (error) => console.log(error)
-      );
-  }
+  // onGet() {
+  //   this.serverService.getServers()
+  //     .subscribe(
+  //       (people: any[]) => {
+  //         this.people = people;
+  //         console.log(this.people)
+  //       },
+  //       (error) => console.log(error)
+  //     );
+  // }
 
   private generateId() {
     return Math.round(Math.random() * 10000);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ServerService {
@@ -13,15 +14,30 @@ export class ServerService {
   }
 
   getServers() {
-    return this.http.get('http://swapi.co/api/peopleeee')
+    return this.http.get('http://swapi.co/api/people')
       .map(
         (response: Response) => {
           const data = response.json().results;
           for (const person of data) {
             person.name = 'FETCHED_' + person.name;
           }
-          return data;
+          console.log(data[0]);
+          return data[0].name;
         }
-      );
+      )
+      .catch(
+        (error: Response) => {
+          return Observable.throw('Something went wrong');
+        }
+      )
   }
+
+  // getAppName() {
+  //   return this.http.get()
+  //     .map(
+  //       (response: Response) => {
+  //         return response.json();         // <---- used with the pipe async logic
+  //       }
+  //     )
+  // }
 }
